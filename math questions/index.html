@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math questions</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Math questions</h1>
+      </div>
+      <div class="selections" >
+        <div class="question-selection">
+          <div class="question selected-span">
+            <span  class="topic" value = "10">10 questions</span>
+          </div>
+          <span class="best-score">
+            <span class="bestscore">Best Score</span>
+            <span class="score">0.0s</span>
+          </span>
+        </div>
+        <!--question sets-->
+        <div class="question-selection">
+          <div class="question">
+            <span class="topic"  value = "25">25 questions</span>
+          </div>
+          <span class="best-score">
+            <span class="bestscore">Best Score</span>
+            <span class="score">0.0s</span>
+          </span>
+        </div>
+        <!--question sets-->
+        <div class="question-selection">
+          <div class="question">
+            <span  class="topic" value = "50">50 questions</span>
+          </div>
+          <span class="best-score">
+            <span class="bestscore">Best Score</span>
+            <span class="score">0.0s</span>
+          </span>
+        </div>
+        <!--question sets-->
+        <div class="question-selection">
+          <div class="question">
+            <span  class="topic">99 questions</span>
+          </div>
+          <span class="best-score">
+            <span class="bestscore">Best Score</span>
+            <span class="score">0.0s</span>
+          </span>
+        </div>
+      
+      <!--start button-->
+      <button class="start">Start round</button>
+    </div>
+
+    <!--countdown-->
+<div class="countdown hidden">
+  <h1 class="number"></h1>
+</div>
+
+ <!--item container-->
+<div class="item-container hidden">
+  <div class="items">
+     <h1 class="ques">1 + 1 = 2 </h1>
+      <div class="buttons-area">
+        <button class="wrong">wrong</button>
+    <button class="right">right</button>
+  </div>
+
+     </div>
+  </div>
+</div>
+
+    <!--countdown-->
+<div class="your-time hidden">
+  <h1 class="your-time-seconds"></h1>
+  <h1 class="base-time">base time: </h1>
+  <h1 class="penalty">penalty: </h1>
+   <button class="right">play again</button>
+</div>
+    <script src="script.js"></script>
+  </body>
+</html>
