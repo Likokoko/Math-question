@@ -46,32 +46,37 @@ function getRandomInt(max) {
 let appendTimes = 0;
 let questionValue = 0;
 
+
 questionSelection.forEach((question) => {
   question.addEventListener("click", () => {
-    return (questionValue = Number(question.innerText.split(" ")[0]));
+    questionValue = Number(question.innerText.split(" ")[0]);
+     createEquations();
+    return questionValue
   });
 });
+console.log(questionValue)
+//好像全域變數,function位置錯了
 
 let correctText = 0;
 function createEquations() {
   correctText = getRandomInt(questionValue);
   console.log(correctText);
   const wrongText = questionValue - correctText;
+    console.log(wrongText);
   for (let i = 0; i < correctText; i++) {
     firstNum = getRandomInt(9);
     secondNum = getRandomInt(9);
     const correctInput = `${firstNum} X ${secondNum} = ${firstNum * secondNum}`;
     ques.textContent = correctInput;
+ 
     itemContainer.appendChild(ques);
   }
-
+ const wrongInput = [`${firstNum - 1} X ${secondNum} = ${firstNum * secondNum}`, `${firstNum} X ${secondNum - 1} = ${firstNum * secondNum}`, `${firstNum} X ${secondNum} = ${firstNum * secondNum - 1}`]
   for (let i = 0; i < wrongText; i++) {
     firstNum = getRandomInt(9);
     secondNum = getRandomInt(9);
-    wrongInput[0] = `${firstNum - 1} X ${secondNum} = ${firstNum * secondNum}`;
-    wrongInput[1] = `${firstNum} X ${secondNum - 1} = ${firstNum * secondNum}`;
-    wrongInput[2] = `${firstNum} X ${secondNum} = ${firstNum * secondNum - 1}`;
-    ques.textContent = wrongInput;
+    ques.textContent = wrongInput[+1];
+    console.log(wrongInput)
     itemContainer.appendChild(ques);
   }
 }
@@ -82,4 +87,4 @@ function showitem() {
   itemContainer.classList.remove("hidden");
 }
 
-createEquations();
+
