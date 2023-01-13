@@ -6,11 +6,29 @@ const countdown = document.querySelector(".countdown");
 const number = document.querySelector(".number");
 const itemContainer = document.querySelector(".item-container");
 const questions = document.querySelector(".questions");
-const ques = document.querySelector(".ques");
+const wrong = document.querySelector(".wrong");
+const right = document.querySelector(".right");
+const item = document.querySelector(".items");
+const yourTime = document.querySelector(".your-time");
+const baseTime = document.querySelector(".base-time");
+const penalty = document.querySelector(".penalty");
+const playAgain = document.querySelector("#playAgain");
+let appendTimes = 0;
+let questionValue = 0;
+let correctText = 0;
+let allQuestion = [];
+let wrongText = 0;
+let answer = [];
+let isCorrect = true;
 
 questionSelection.forEach((item) => {
   item.addEventListener("click", () => {
-    item.classList.toggle("selected-label");
+    if (item.classList.contains("selected-label")) {
+      alert("click the start button");
+      answer = [];
+    } else {
+      item.classList.toggle("selected-label");
+    }
   });
 });
 
@@ -43,48 +61,103 @@ function countDown() {
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
-let appendTimes = 0;
-let questionValue = 0;
-
 
 questionSelection.forEach((question) => {
   question.addEventListener("click", () => {
     questionValue = Number(question.innerText.split(" ")[0]);
-     createEquations();
-    return questionValue
+    createEquations();
+    console.log("questionValue:", questionValue);
   });
 });
-console.log(questionValue)
-//好像全域變數,function位置錯了
 
-let correctText = 0;
+//correct ques
 function createEquations() {
   correctText = getRandomInt(questionValue);
-  console.log(correctText);
-  const wrongText = questionValue - correctText;
-    console.log(wrongText);
+  wrongText = questionValue - correctText;
+  console.log("correctText:", correctText, "wrongText:", wrongText);
+
   for (let i = 0; i < correctText; i++) {
     firstNum = getRandomInt(9);
     secondNum = getRandomInt(9);
     const correctInput = `${firstNum} X ${secondNum} = ${firstNum * secondNum}`;
-    ques.textContent = correctInput;
- 
-    itemContainer.appendChild(ques);
+    answer.push({
+      math: correctInput,
+      isCorrect: true,
+    });
   }
- const wrongInput = [`${firstNum - 1} X ${secondNum} = ${firstNum * secondNum}`, `${firstNum} X ${secondNum - 1} = ${firstNum * secondNum}`, `${firstNum} X ${secondNum} = ${firstNum * secondNum - 1}`]
+
   for (let i = 0; i < wrongText; i++) {
     firstNum = getRandomInt(9);
     secondNum = getRandomInt(9);
-    ques.textContent = wrongInput[+1];
-    console.log(wrongInput)
-    itemContainer.appendChild(ques);
+    const wrongInput = [
+      `${firstNum - 1} X ${secondNum} = ${firstNum * secondNum}`,
+      `${firstNum} X ${secondNum - 1} = ${firstNum * secondNum}`,
+      `${firstNum} X ${secondNum} = ${firstNum * secondNum - 1}`,
+    ];
+    let getWrongText = wrongInput[getRandomInt(3)];
+    answer.push({
+      math: getWrongText,
+      isCorrect: false,
+    });
   }
+
+  for (let i = answer.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [answer[i], answer[j]] = [answer[j], answer[i]];
+  }
+  console.log(answer);
 }
+
+let point = 0;
+let isRight = true;
+let isWrong = false;
+let answerArr = [];
+let QuestionAnswerArr = [];
 
 function showitem() {
   selections.classList.add("hidden");
   countdown.classList.add("hidden");
   itemContainer.classList.remove("hidden");
+  for (let i = 0; i < answer.length; i++) {
+    let ques = document.createElement("h1");
+    ques.innerHTML = answer[i].math;
+    itemContainer.appendChild(ques);
+    QuestionAnswerArr.push(answer[i].isCorrect);
+  }
 }
 
+right.addEventListener("click", () => {
+  if (answerArr.length === questionValue) {
+    yourTime.classList.remove("hidden");
+    getCorrect();
+  } else {
+    answerArr.push(isRight);
+    console.log(answerArr);
+  }
+});
+wrong.addEventListener("click", () => {
+  if (answerArr.length === questionValue) {
+    yourTime.classList.remove("hidden");
+    getCorrect();
+  }
+  answerArr.push(isWrong);
+  console.log(answerArr);
+});
 
+let finalArray = [];
+function getCorrect() {
+  for (let i = 0; i < answer.length; i++) {
+    finalArray.push(answer[i].isCorrect);
+  }
+  if (answerArr === finalArray) {
+    baseTime.innerText = "100!";
+    penalty.innerText = "0";
+  } else {
+    baseTime.innerText = "here's the answer :" + finalArray;
+    penalty.innerText = "here's yours! :" + answerArr;
+  }
+}
+
+playAgain.addEventListener("click", () => {
+  location.reload();
+});
